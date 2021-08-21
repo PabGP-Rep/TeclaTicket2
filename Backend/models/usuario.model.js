@@ -94,4 +94,6 @@ Usuario.init({
   sequelize,
 });
 
+
+
 module.exports = Usuario;

@@ -9,3 +9,4 @@ Paquetes utilizados en el desarrollo:
 - tedious
 - joi
 - jsonwebtoken
+- bcrypt

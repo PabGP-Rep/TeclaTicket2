@@ -16,13 +16,14 @@ const crearUsuario = async (req, res) => {
 const loginUsuario = async (req, res) =>{
   const { email, pass } = req.body;
   try {
-    const usuario = await userService.loginUser(email, pass);
+    const usuario = JSON.parse(JSON.stringify(await userService.loginUser(email, pass)));
     if (usuario == 'Usuario o contraseña incorrectos') {
       throw new Error('Usuario o contraseña incorrectos');      
     }
 
-    const user = { "nombre": usuario.nombre, "id": usuario.id, "tipo": usuario.tipo };
-    console.log(user);
+    const user = { "email": usuario.email, "id": usuario.id, "tipo": usuario.tipo };
+    delete usuario.pass;
+    delete usuario.tipo;
     const token = await generarToken(user);
     const respuesta = [{usuario}, {token}]
     console.log("Perfil encontrado con exito [CONTROLLER]");
@@ -32,7 +33,10 @@ const loginUsuario = async (req, res) =>{
   }
 }
 
-const listarUsuarios = async (req, res) =>{
+const listarUsuarios = async (req, res) =>{   
+
+  //await userService.sincron();
+  
   try {
     let listaUsuarios = await userService.listUsers();
     console.log("Consulta exitosa [CONTROLLER]");

@@ -1,8 +1,10 @@
 const Joi = require('joi');
-const { listarUsuarios, actualizarUsuario } = require('../controllers/usuario.controller');
 const { loginDTO, altaUsuarioDTO, busquedaUsuarioDTO, actualizacionUsuarioDTO, eliminacionUsuarioDTO } = require('../dto/usuario/usuario.dto');
+const { altaPublicacionDTO, actualizacionPublicacionDTO, eliminacionPublicacionDTO } = require('../dto/publicacion/publicacion.dto');
 const Usuario = require('../models/usuario.model');
+const Publicacion = require('../models/publicacion.model');
 
+//Usuarios
 const usuarioExiste = async function(req, res, next) {
   let listaUsuarios = await Usuario.findOne(
       {where: {email: req.body.email}}
@@ -60,4 +62,36 @@ const checkDatosEliminacion = async (req, res, next) => {
   }
 }
 
-module.exports = { usuarioExiste, checkDatosLogin, checkDatosAlta, checkDatosBusqueda, checkDatosActualizacion, checkDatosEliminacion};
+///Publicaciones
+const chkDatosAltaPublicacion = async (req, res, next) => {
+  try {
+    await Joi.attempt(req.body, altaPublicacionDTO, "Los datos enviados son incorrectos");
+    return next();    
+  } catch (error) {
+    res.status(500).json({error: error.message});  
+  }
+}
+
+const chkDatosActualizacionPublicacion = async (req, res, next) => {
+  try {
+    await Joi.attempt(req.body, actualizacionPublicacionDTO, "Los datos enviados son incorrectos");
+    return next();    
+  } catch (error) {
+    res.status(500).json({error: error.message});  
+  }
+}
+
+const chkDatosEliminacionPublicacion = async (req, res, next) => {
+  try {
+    await Joi.attempt(req.body, eliminacionPublicacionDTO, "Los datos enviados son incorrectos");
+    return next();    
+  } catch (error) {
+    res.status(500).json({error: error.message});  
+  }
+}
+
+module.exports = { 
+  usuarioExiste, checkDatosLogin, checkDatosAlta, checkDatosBusqueda, checkDatosActualizacion, 
+  checkDatosEliminacion, chkDatosAltaPublicacion, chkDatosActualizacionPublicacion,
+  chkDatosEliminacionPublicacion
+};
