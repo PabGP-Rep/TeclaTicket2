@@ -2,6 +2,7 @@ const Joi = require('joi');
 
 module.exports.altaPublicacionDTO = Joi.object().keys({
   idUsuario: Joi.number().positive().integer().required(),
+  idUsuarioP: Joi.number().positive().integer().required(),
   contenido: Joi.string().required(),
   fecha: Joi.date().required(),
 });

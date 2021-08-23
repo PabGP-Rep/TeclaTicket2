@@ -1,16 +1,16 @@
-const { chkDatosAltaPublicacion, chkDatosActualizacionPublicacion, chkDatosEliminacionPublicacion } = require('../middlewares/index');
+const { chkDatosAltaPublicacion, chkDatosActualizacionPublicacion, chkDatosEliminacionPublicacion, validarTokenAdmin, validarToken } = require('../middlewares/index');
 const { crearPublicacion, listarPublicaciones, buscarPublicaciones, actualizarPublicacion, eliminarPublicacion } = require('../controllers/publicacion.controller');
 
 module.exports = (app) => {
 
-  app.post('/publicacion/create', chkDatosAltaPublicacion, crearPublicacion);
+  app.post('/publicacion/create', validarToken, chkDatosAltaPublicacion, crearPublicacion);
 
-  app.get('/publicacion/list', listarPublicaciones);
+  app.get('/publicacion/list', validarTokenAdmin, listarPublicaciones);
 
-  app.post('/publicacion/search', buscarPublicaciones);
+  app.post('/publicacion/search', validarToken, buscarPublicaciones);
 
-  app.post('/publicacion/update', chkDatosActualizacionPublicacion, actualizarPublicacion);
+  app.post('/publicacion/update', validarToken, chkDatosActualizacionPublicacion, actualizarPublicacion);
 
-  app.post('/publicacion/delete', chkDatosEliminacionPublicacion, eliminarPublicacion);
+  app.post('/publicacion/delete', validarToken, chkDatosEliminacionPublicacion, eliminarPublicacion);
 
 }

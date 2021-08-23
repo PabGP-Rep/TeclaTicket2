@@ -33,16 +33,18 @@ CREATE TABLE Amistades(
 CREATE TABLE Post(
   id INT NOT NULL IDENTITY(1,1),
   idUsuario INT NOT NULL,
+  idUsuarioP INT NOT NULL,
   contenido VARCHAR(max) NOT NULL,
   fecha DATETIME NOT NULL,
   PRIMARY KEY(id),
-  FOREIGN KEY(idUsuario) REFERENCES Usuarios
+  FOREIGN KEY(idUsuario) REFERENCES Usuarios,
+  FOREIGN KEY(idUsuarioP) REFERENCES Usuarios
 );
 
 CREATE TABLE Evaluaciones(
   id INT NOT NULL IDENTITY(1,1),
-  idUsuario INT NOT NULL,
-  idUsuarioC INT NOT NULL,
+  idUsuarioA INT NOT NULL,
+  idUsuarioB INT NOT NULL,
   basesDeDatos INT NOT NULL DEFAULT 0,
   apis INT NOT NULL DEFAULT 0,
   testings INT NOT NULL DEFAULT 0,

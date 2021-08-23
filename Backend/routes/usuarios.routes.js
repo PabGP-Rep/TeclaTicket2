@@ -1,17 +1,19 @@
-const { usuarioExiste, checkDatosLogin, checkDatosAlta, checkDatosBusqueda, checkDatosActualizacion, checkDatosEliminacion } = require('../middlewares/index');
-const { crearUsuario, listarUsuarios, loginUsuario, buscarUsuarios, actualizarUsuario, eliminarUsuario } = require('../controllers/usuario.controller');
+const { usuarioExiste, checkDatosLogin, checkDatosAlta, checkDatosBusqueda, checkDatosActualizacion, checkDatosEliminacion, checkDatosBusquedaId, validarToken, validarTokenAdmin } = require('../middlewares/index');
+const { crearUsuario, listarUsuarios, loginUsuario, buscarUsuarios, actualizarUsuario, eliminarUsuario, buscarUsuario } = require('../controllers/usuario.controller');
 
 module.exports = (app) => {
 
-  app.post('/usuario/create', checkDatosAlta, usuarioExiste, crearUsuario);
+  app.post('/usuario/create', validarToken, checkDatosAlta, usuarioExiste, crearUsuario);
 
   app.post('/usuario/login', checkDatosLogin, loginUsuario);
 
-  app.get('/usuario/list', listarUsuarios);
+  app.get('/usuario/list', validarTokenAdmin, listarUsuarios);
 
-  app.get('/usuario/search', checkDatosBusqueda, buscarUsuarios);
+  app.post('/usuario/search', validarToken, checkDatosBusqueda, buscarUsuarios);
 
-  app.post('/usuario/update', checkDatosActualizacion, actualizarUsuario);
+  app.post('/usuario/search/id', validarToken, checkDatosBusquedaId, buscarUsuario);
 
-  app.post('/usuario/delete', checkDatosEliminacion, eliminarUsuario);
+  app.post('/usuario/update', validarToken, checkDatosActualizacion, actualizarUsuario);
+
+  app.post('/usuario/delete', validarTokenAdmin, checkDatosEliminacion, eliminarUsuario);
 }

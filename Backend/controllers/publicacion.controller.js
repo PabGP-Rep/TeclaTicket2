@@ -2,13 +2,13 @@ const Post = require('../services/publicacion.service');
 const postService = new Post();
 
 const crearPublicacion = async (req, res) => {
-  const { idUsuario, contenido, fecha } = req.body;
+  const { idUsuario, idUsuarioP, contenido, fecha } = req.body;
   try {
-    await postService.createPost(idUsuario, contenido, fecha);
+    await postService.createPost(idUsuario, idUsuarioP, contenido, fecha);
     console.log("Publicacion exitosa [CONTROLLER]");
     res.status(201).json('Publicación realizada');
   } catch (error) {
-    return res.status(500);
+    return res.status(500).json({error: error.message});;
   }
 }
 

@@ -55,7 +55,26 @@ class User {
         console.log("Perfil encontrado con exito [SERVICE]");       
         return encontrado;        
       }else{
-       return 'No hay resultados que mostrar';
+       return [];
+      }      
+    } catch (error) {
+      //console.log(error);
+      return error;
+    }
+  }
+
+  searchUserById = async (id) => {
+    try {
+      let encontrado = await Usuario.findOne({
+        attributes: { exclude: ['pass', 'tipo'] },
+        where: { id: id }
+      });
+
+      if (encontrado) {
+        console.log("Perfil encontrado con exito [SERVICE]");       
+        return encontrado;        
+      }else{
+       return [];
       }      
     } catch (error) {
       //console.log(error);
@@ -94,13 +113,6 @@ class User {
     console.log("Eliminacion exitosa [SERVICE]");
     return 0;  
   }
-
-  sincron = async () => {
-    await Usuario.sync({force:true});
-    console.log("Syncro [SERVICE]");
-    return 0;  
-  }
-
 
 
   

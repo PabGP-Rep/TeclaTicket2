@@ -33,10 +33,7 @@ const loginUsuario = async (req, res) =>{
   }
 }
 
-const listarUsuarios = async (req, res) =>{   
-
-  //await userService.sincron();
-  
+const listarUsuarios = async (req, res) =>{     
   try {
     let listaUsuarios = await userService.listUsers();
     console.log("Consulta exitosa [CONTROLLER]");
@@ -52,6 +49,17 @@ const buscarUsuarios = async (req, res) =>{
     let listaUsuarios = await userService.searchUser(nombre);
     console.log("Consulta exitosa [CONTROLLER]");
     res.status(200).json(listaUsuarios);
+  } catch (error) {
+    return res.status(500).json({error: error.message});
+  }
+}
+
+const buscarUsuario = async (req, res) =>{
+  const id = req.body.id;
+  try {
+    let usuario = await userService.searchUserById(id);
+    console.log("Consulta exitosa [CONTROLLER]");
+    res.status(200).json(usuario);
   } catch (error) {
     return res.status(500).json({error: error.message});
   }
@@ -79,4 +87,4 @@ const eliminarUsuario = async (req, res) =>{
   }
 }
 
-module.exports = { crearUsuario, loginUsuario, listarUsuarios, buscarUsuarios, actualizarUsuario, eliminarUsuario };
+module.exports = { crearUsuario, loginUsuario, listarUsuarios, buscarUsuarios, buscarUsuario, actualizarUsuario, eliminarUsuario };

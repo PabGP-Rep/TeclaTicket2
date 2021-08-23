@@ -3,13 +3,13 @@ const Usuario = require('../models/usuario.model');
 
 class Post {
   //Metodos del Servicio Post
-  createPost = async (idUsuario, contenido, fecha) => {
+  createPost = async (idUsuario, idUsuarioP, contenido, fecha) => {
     try {
       const publicacion = await Publicacion.create({ 
-        idUsuario: idUsuario, contenido: contenido, fecha: fecha,});
+        idUsuario: idUsuario, idUsuarioP: idUsuarioP, contenido: contenido, fecha: fecha,});
       console.log("Usuario creado con exito [SERVICE]");
       return publicacion;
-    } catch (error) {s
+    } catch (error) {
       console.log(error);
       return error;
     }
@@ -18,12 +18,12 @@ class Post {
   searchPost = async (idUsuario) => {
     try {
       let encontrado = await Publicacion.findAll({        
-        attributes: ['contenido', 'fecha'],
+        attributes: ['id', 'contenido', 'fecha'],
         where: { idUsuario: idUsuario },
         include: {
-          model: Usuario,
           required: true,
-          attributes: ['nombre', 'apellido', 'imagen'],
+          model: Usuario,
+          attributes: ['id', 'nombre', 'apellido', 'imagen'],
         }        
       });
 
@@ -31,7 +31,7 @@ class Post {
         console.log("Consulta exitosa [SERVICE]");       
         return encontrado;        
       }else{
-       return 'No hay resultados que mostrar';
+       return [];
       }      
     } catch (error) {
       //console.log(error);

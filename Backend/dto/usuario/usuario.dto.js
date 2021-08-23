@@ -19,6 +19,10 @@ module.exports.busquedaUsuarioDTO = Joi.object().keys({
   nombre: Joi.string().required()
 });
 
+module.exports.busquedaUsuarioIdDTO = Joi.object().keys({
+  id: Joi.number().integer().positive().required(),
+});
+
 module.exports.actualizacionUsuarioDTO = Joi.object().keys({
   id: Joi.number().integer().positive().required(),
   nombre: Joi.string().required(),

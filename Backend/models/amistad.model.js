@@ -2,9 +2,9 @@ const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../db/conexion');
 const Usuario = require('./usuario.model');
 
-class Publicacion extends Model {}
+class Amistad extends Model {}
 
-Publicacion.init({
+Amistad.init({
   //Definicion de atributos del modelo
   id: {
     type: DataTypes.INTEGER,
@@ -13,7 +13,7 @@ Publicacion.init({
     autoIncrement: true
   },
 
-  idUsuario: {
+  idUsuarioA: {
     type: DataTypes.INTEGER,   
     references:{
       model: 'Usuario',
@@ -22,29 +22,29 @@ Publicacion.init({
     allowNull: false,
   },
 
-  idUsuarioP: {
+  idUsuarioB: {
     type: DataTypes.INTEGER,   
     references:{
       model: 'Usuario',
       key: 'id'
     },
     allowNull: false,
-  },
-
-  contenido: {
-    type: DataTypes.STRING,
-    allowNull: false
   },
 
   fecha: {
     type: DataTypes.DATEONLY,
     allowNull: false
-  }
+  },
 
-}, {
+  estatus: {
+    type: DataTypes.INTEGER,   
+    allowNull: false,
+    defaultValue: 0
+  },
+},{
   //Opciones extra del modelo
-  modelName: 'Publicacion',
-  tableName: 'Post',
+  modelName: 'Amistad',
+  tableName: 'Amistades',
   timestamps: false,
   createdAt: false,
   updatedAt: false,
@@ -52,6 +52,7 @@ Publicacion.init({
   sequelize,
 });
 
-Publicacion.belongsTo(Usuario, {foreignKey: 'idUsuarioP'});
+Amistad.belongsTo(Usuario, {as: 'amigoA', foreignKey: 'idUsuarioA'});
+Amistad.belongsTo(Usuario, {as: 'amigoB', foreignKey: 'idUsuarioB'});
 
-module.exports = Publicacion;
+module.exports = Amistad;
