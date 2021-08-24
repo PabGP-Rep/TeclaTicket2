@@ -69,6 +69,6 @@ CREATE TABLE Evaluaciones(
   metodologias INT NOT NULL DEFAULT 0,
   fecha DATETIME NOT NULL,
   PRIMARY KEY(id),
-  FOREIGN KEY(idUsuario) REFERENCES Usuarios,
-  FOREIGN KEY(idUsuarioC) REFERENCES Usuarios
+  FOREIGN KEY(idUsuarioA) REFERENCES Usuarios,
+  FOREIGN KEY(idUsuarioB) REFERENCES Usuarios
 );
